@@ -59,12 +59,33 @@ public class Main {
         return dp[0];
     }
 
+    public static int MaxSumSO(int i, int n, ArrayList<Integer> arr){
+        int next2 = 0;
+        int next1 = arr.get(n-1);
+            
+        int ansY = Integer.MIN_VALUE;
+        int ansN = Integer.MIN_VALUE;
+        int curr = 0; 
+        for(i = n-2; i>=0; i--){
+            if(i+2<=n)
+                ansY = next2 + arr.get(i);
+            if(i+1<=n)
+                ansN = next1;
+            curr = Math.max(ansN, ansY);
+            next2 = next1;
+            next1 = curr;            
+        }
+        return next1;
+    }
+    
+
     public static void main(String[] args) {
         ArrayList<Integer> nums = new ArrayList<>();
         //int ans = MaxSum(0, nums.size(), nums);
         int [] dp = new int[nums.size()+1];
         //int ans = MaxSumMemo(0, nums.size(), nums, dp);
-        int ans = MaxSumTabu(0, nums.size(), nums, dp);
+        //int ans = MaxSumTabu(0, nums.size(), nums, dp);
+        int ans = MaxSumSO(0, nums.size(), nums);
         System.out.println(ans);
     }
 }
